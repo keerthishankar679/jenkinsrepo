@@ -4,8 +4,6 @@ node {
     }
 
     stage('display') {
-        steps {
-            sh 'echo we have completed the job'
-        }
+        sh 'echo we have completed the job'
     }
 }
