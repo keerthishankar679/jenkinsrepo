@@ -14,12 +14,6 @@ node {
         }
     }
 
-    stage('Deliver') {
-        steps {
-            sh './jenkins/scripts/deliver.sh'
-        }
-    }
-
     stage('display') {
         steps {
             sh 'echo we have completed the job'
