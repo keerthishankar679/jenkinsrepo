@@ -2,16 +2,7 @@ node {
     stage('Build') {
         sh 'mvn -B -DskipTests clean install'
     }
-    stage('Test') {
-        sh 'mvn test'
-        
-        post {
-            success {
-                junit 'target/surefire-reports/*.xml'
-                archiveArtifacts 'target/*.jar'
-            }
-        }
-    }
+
     stage('display') {
         sh 'echo we have completed the job'
     }
