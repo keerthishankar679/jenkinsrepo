@@ -1,6 +1,14 @@
 node {
     stage('Build') {
-        sh 'mvn -B -DskipTests clean install'
+        
+        tool 'maven'
+        tool 'java'
+
+        sh 'mvn build-helper:parse-version versions:set@major'
+        sh 'mvn build-helper:parse-version versions:set@minor'
+        sh 'mvn build-helper:parse-version versions:set@patch'
+        sh 'mvn clean install'
+        archiveArtifacts artifacts: 'target/*.jar'
     }
 
     stage('display') {
