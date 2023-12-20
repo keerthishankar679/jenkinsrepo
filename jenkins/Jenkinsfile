@@ -1,0 +1,37 @@
+node {
+
+    stage('Initialization') {
+        // Set up Maven
+        tool 'maven'
+        MVN_HOME = tool 'maven'
+    }
+
+    stage('Build') {
+        // Set your Maven goals and options
+        def mavenCmd = "${MVN_HOME}/bin/mvn"
+        def mavenOptions = '-B -Dmaven.test.failure.ignore=true'
+
+        // Build the Maven project
+        sh "${mavenCmd} ${mavenOptions} clean install"
+    }
+
+    stage('Versioning') {
+        // Increment the version using the Semantic Versioning Plugin
+        def version = script {
+            return semver.incrementVersion(majorVersion: '1', minorVersion: '0', patchVersion: '0', preReleaseVersion: '', buildMetadataVersion: '')
+        }
+        echo "New Version: ${version}"
+
+        // Update the POM file with the new version
+        sh "mvn versions:set -DnewVersion=${version}"
+    }
+
+    stage('Deploy') {
+        // Set your Maven goals and options
+        def mavenCmd = "${MVN_HOME}/bin/mvn"
+        def mavenOptions = '-B -Dmaven.test.failure.ignore=true'
+
+        // Deploy your Maven artifacts
+        sh "${mavenCmd} ${mavenOptions} deploy"
+    }
+}
