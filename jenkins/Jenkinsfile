@@ -1,4 +1,5 @@
 node {
+    def MVN_HOME
 
     stage('Initialization') {
         // Set up Maven
@@ -17,8 +18,9 @@ node {
 
     stage('Versioning') {
         // Increment the version using the Semantic Versioning Plugin
-        def version = script {
-            return semver.incrementVersion(majorVersion: '1', minorVersion: '0', patchVersion: '0', preReleaseVersion: '', buildMetadataVersion: '')
+        def version
+        script {
+            version = semver.incrementVersion(majorVersion: '1', minorVersion: '0', patchVersion: '0', preReleaseVersion: '', buildMetadataVersion: '')
         }
         echo "New Version: ${version}"
 
