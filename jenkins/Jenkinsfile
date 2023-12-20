@@ -16,7 +16,7 @@ node {
         sh "${mavenCmd} ${mavenOptions} clean install"
 
         // Extract version from the project
-        def version = sh(script: "${mavenCmd} -q org.codehaus.mojo:build-helper-maven-plugin:3.0:parse-version", returnStdout: true).trim()
+        def version = sh(script: "${mavenCmd} -q org.codehaus.mojo:build-helper-maven-plugin:3.2.0:parse-version", returnStdout: true).trim()
         echo "Current Version: ${version}"
 
         // Increment the version (you might need to implement your own logic here)
